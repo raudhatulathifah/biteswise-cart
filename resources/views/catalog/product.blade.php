@@ -14,9 +14,9 @@
     </tr>
   </thead>
   <tbody>
-  @foreach ($products as $item)
+  @foreach ($products as $index => $item)
     <tr>
-      <th scope="row">1</th>
+    <th scope="row">{{ $index + 1 }}</th> 
       <td>{{ $item->nama_produk }}</td>
       <td>{{ $item->harga }}</td>
       <td><a href="{{ route('produk.show', $item->id) }}" class="btn btn-light">

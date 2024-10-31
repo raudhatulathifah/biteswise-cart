@@ -22,7 +22,7 @@ class CartController extends Controller
 
 
 
-    public function store(Request $request)
+    public function tambahKeranjang(Request $request)
 {
     $request->validate([
         'product_id' => 'required|exists:products,id', // Validasi ID produk

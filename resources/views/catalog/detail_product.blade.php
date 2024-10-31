@@ -23,7 +23,7 @@
 
   <!-- Back Button -->
   <div class="mb-4">
-  <a href="{{ url()->previous() }}" class="btn btn-light me-3"><i class="bi bi-arrow-left"></i></a>
+  <a href="{{ route('produk.index') }}" class="btn btn-light me-3"><i class="bi bi-arrow-left"></i></a>
   </div>
 
   <!-- Product Details -->
@@ -47,7 +47,7 @@
         <p>{{ $product->berat}} gr | {{ $product->kalori}} cal</p>
 
         
-            <form id="cartForm" action="{{ route('cart.store') }}" method="POST">
+            <form id="cartForm" action="{{ route('cart.tambahKeranjang') }}" method="POST">
     @csrf <!-- Menambahkan token CSRF -->
     <div class="d-flex justify-content-between mt-5 align-items-center">
     <div>
