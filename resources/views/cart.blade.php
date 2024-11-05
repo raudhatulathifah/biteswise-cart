@@ -98,13 +98,34 @@
             <span>Total (<span id="total-produk">{{ $cart->count() }}</span> Produk):</span>
         </div>
         <div>
-            <span class="px-3 text-success fw-medium fs-4"><span id="total-harga">{{ number_format($cart->sum(fn($item) => $item->harga * $item->kuantitas), 0) }}</span></span>
+            <span class="px-3 text-success fw-medium fs-4">
+                <span id="total-harga">{{ number_format($cart->sum(fn($item) => $item->harga * $item->kuantitas), 0) }}</span>
+            </span>
         </div>
         <div>
-            <button class="btn btn-success mx-3 px-4 rounded-5">Buat Pesanan</button>
+            <button id="buatPesananButton" class="btn btn-success mx-3 px-4 rounded-5">Buat Pesanan</button>
         </div>
     </div>
 </div>
+
+<!-- Tambahkan modal atau div untuk pesan berhasil -->
+<div id="pesanBerhasil" class="d-none alert alert-success position-fixed top-50 start-50 translate-middle" role="alert">
+    Pesanan berhasil dibuat!
+</div>
+
+<script>
+    document.getElementById('buatPesananButton').addEventListener('click', function () {
+        // Tampilkan pesan berhasil
+        const pesanBerhasil = document.getElementById('pesanBerhasil');
+        pesanBerhasil.classList.remove('d-none');
+        
+        // Sembunyikan pesan setelah 3 detik
+        setTimeout(() => {
+            pesanBerhasil.classList.add('d-none');
+        }, 3000);
+    });
+</script>
+
 
 </div>
 </section>
