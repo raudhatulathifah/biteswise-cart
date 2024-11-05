@@ -10,6 +10,9 @@ Route::resource('produk', ProductController::class);
 Route::post('/cart/tambahkeranjang',[CartController::class, 'tambahKeranjang'])->name('cart.tambahKeranjang');
 Route::get('/cart',[CartController::class, 'index'])->name('cart.index');
 Route::delete('/cart/destroy/{id}',[CartController::class, 'destroy'])->name('cart.destroy');
+Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+
 
 
 

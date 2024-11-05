@@ -147,6 +147,66 @@
 
 </body>
 
+<script>
+    document.getElementById('buatPesananButton').addEventListener('click', function () {
+        // Ambil semua item yang dicentang
+        const checkedItems = Array.from(document.querySelectorAll('.item-checkbox:checked'));
+        const itemIds = checkedItems.map(item => item.closest('.cart-item').getAttribute('data-id'));
+
+        if (itemIds.length === 0) {
+            alert('Tidak ada item yang dipilih.');
+            return;
+        }
+
+        // Kirim data ke server
+        fetch("{{ route('cart.checkout') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ itemIds: itemIds })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Tampilkan modal pesan berhasil
+            const pesananBerhasilModal = new bootstrap.Modal(document.getElementById('pesananBerhasilModal'));
+            pesananBerhasilModal.show();
+
+            // Hapus item yang dicentang dari tampilan dan perbarui total harga
+            checkedItems.forEach(item => {
+                item.closest('.cart-item').remove();
+            });
+            
+            updateTotalHarga(); // Perbarui total harga dan jumlah produk
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat membuat pesanan.');
+        });
+    });
+
+    // Fungsi untuk memperbarui total harga dan jumlah produk
+    function updateTotalHarga() {
+        let totalHarga = 0;
+        let totalProduk = 0;
+
+        // Hitung ulang total harga berdasarkan item yang tersisa
+        document.querySelectorAll('.cart-item').forEach(item => {
+            const harga = parseInt(item.querySelector('.harga').innerText.replace(/[^0-9]/g, ''));
+            const kuantitas = parseInt(item.querySelector('.kuantitas').innerText);
+            totalHarga += harga * kuantitas;
+            totalProduk++;
+        });
+
+        // Tampilkan hasil baru tanpa refresh
+        document.getElementById('total-harga').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalHarga);
+        document.getElementById('total-produk').innerText = totalProduk;
+    }
+</script>
+
+
+
 
 </div>
 </section>

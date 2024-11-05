@@ -7,6 +7,8 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
 
 
+
+
 class CartController extends Controller
 {
 
@@ -57,5 +59,18 @@ public function destroy($id)
 
     return redirect()->route('cart.index')->with('error', 'Item tidak ditemukan.');
 }
+
+public function checkout(Request $request)
+{
+    $itemIds = $request->input('itemIds'); // Ambil daftar ID item yang dicentang
+
+    if ($itemIds) {
+        // Hapus item dari database berdasarkan ID
+        Cart::whereIn('id', $itemIds)->delete();
+    }
+
+    return response()->json(['message' => 'Pesanan berhasil dibuat!']);
+}
+
 
 }
