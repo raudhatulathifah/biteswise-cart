@@ -92,39 +92,60 @@
 <!-- /////////////////////////Table cart end//////////////////////// -->
 
 <!-- Total Cart Summary -->
-<div class="card bg-white rounded-4">
-    <div class="d-flex justify-content-end align-items-center py-2">
-        <div class="px-2">
-            <span>Total (<span id="total-produk">{{ $cart->count() }}</span> Produk):</span>
-        </div>
-        <div>
-            <span class="px-3 text-success fw-medium fs-4">
-                <span id="total-harga">{{ number_format($cart->sum(fn($item) => $item->harga * $item->kuantitas), 0) }}</span>
-            </span>
-        </div>
-        <div>
-            <button id="buatPesananButton" class="btn btn-success mx-3 px-4 rounded-5">Buat Pesanan</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesanan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card bg-white rounded-4">
+        <div class="d-flex justify-content-end align-items-center py-2">
+            <div class="px-2">
+                <span>Total (<span id="total-produk">{{ $cart->count() }}</span> Produk):</span>
+            </div>
+            <div>
+                <span class="px-3 text-success fw-medium fs-4">
+                    <span id="total-harga">{{ number_format($cart->sum(fn($item) => $item->harga * $item->kuantitas), 0) }}</span>
+                </span>
+            </div>
+            <div>
+                <button id="buatPesananButton" class="btn btn-success mx-3 px-4 rounded-5">Buat Pesanan</button>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Tambahkan modal atau div untuk pesan berhasil -->
-<div id="pesanBerhasil" class="d-none alert alert-success position-fixed top-50 start-50 translate-middle" role="alert">
-    Pesanan berhasil dibuat!
+<!-- Modal untuk Pesan Berhasil -->
+<div class="modal fade" id="pesananBerhasilModal" tabindex="-1" aria-labelledby="pesananBerhasilLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="pesananBerhasilLabel">Pesanan Berhasil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Pesanan Anda telah berhasil dibuat!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.getElementById('buatPesananButton').addEventListener('click', function () {
-        // Tampilkan pesan berhasil
-        const pesanBerhasil = document.getElementById('pesanBerhasil');
-        pesanBerhasil.classList.remove('d-none');
-        
-        // Sembunyikan pesan setelah 3 detik
-        setTimeout(() => {
-            pesanBerhasil.classList.add('d-none');
-        }, 3000);
+        // Tampilkan modal pesan berhasil
+        const pesananBerhasilModal = new bootstrap.Modal(document.getElementById('pesananBerhasilModal'));
+        pesananBerhasilModal.show();
     });
 </script>
+
+</body>
 
 
 </div>
