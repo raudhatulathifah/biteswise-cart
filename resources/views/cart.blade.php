@@ -173,38 +173,20 @@
             const pesananBerhasilModal = new bootstrap.Modal(document.getElementById('pesananBerhasilModal'));
             pesananBerhasilModal.show();
 
-            // Hapus item yang dicentang dari tampilan dan perbarui total harga
+            // Hapus item yang dicentang dari tampilan
             checkedItems.forEach(item => {
                 item.closest('.cart-item').remove();
             });
-            
-            updateTotalHarga(); // Perbarui total harga dan jumlah produk
+
+            // Perbarui total harga
+            updateTotalHarga();
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Terjadi kesalahan saat membuat pesanan.');
         });
     });
-
-    // Fungsi untuk memperbarui total harga dan jumlah produk
-    function updateTotalHarga() {
-        let totalHarga = 0;
-        let totalProduk = 0;
-
-        // Hitung ulang total harga berdasarkan item yang tersisa
-        document.querySelectorAll('.cart-item').forEach(item => {
-            const harga = parseInt(item.querySelector('.harga').innerText.replace(/[^0-9]/g, ''));
-            const kuantitas = parseInt(item.querySelector('.kuantitas').innerText);
-            totalHarga += harga * kuantitas;
-            totalProduk++;
-        });
-
-        // Tampilkan hasil baru tanpa refresh
-        document.getElementById('total-harga').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalHarga);
-        document.getElementById('total-produk').innerText = totalProduk;
-    }
 </script>
-
 
 
 
