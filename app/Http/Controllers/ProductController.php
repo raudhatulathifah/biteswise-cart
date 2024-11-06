@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Product; // Import the Product model
 use Illuminate\Http\Request;
 
+
 class ProductController extends Controller
 {
     /**
@@ -14,6 +15,7 @@ class ProductController extends Controller
     {
         $products = Product::all(); // Fetch all products from the database
         return view('catalog.product', compact('products')); // Pass the products to the view
+        
     }
     
 
@@ -70,4 +72,6 @@ class ProductController extends Controller
     {
         //
     }
+
+
 }

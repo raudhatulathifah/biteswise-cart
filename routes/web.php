@@ -13,10 +13,6 @@ Route::delete('/cart/destroy/{id}',[CartController::class, 'destroy'])->name('ca
 Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 
-
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
