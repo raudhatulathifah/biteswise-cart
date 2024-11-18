@@ -16,7 +16,6 @@
     <section>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="fw-bold">Healthy Food</h2>
-            <a href="#" class="text-decoration-none text-dark">See All</a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($products as $item)

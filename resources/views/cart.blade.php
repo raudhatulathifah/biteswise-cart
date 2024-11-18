@@ -6,7 +6,6 @@
 <!-- </style> -->
 @extends('layouts.main') <!-- Extends the main layout -->
 @section('title', 'Shopping Cart') <!-- Sets the title for the page -->
-
 @section('content')
 <section>
     <!-- Shopping Cart Container -->
@@ -27,22 +26,20 @@
                 </div>
             </div>
         </div>
-
     <!-- ///////////////////////////Table cart start///////////////////////-->
     <div class="card bg-white mb-3 p-3 rounded-4">
-
-        <table class="table">
-  <thead>
-    <tr>
-    <th class="text-center" scope="col" style="width: 5%;"></th> <!-- Checkbox column -->
-    <th scope="col" style="width: 35%;">Produk</th> <!-- Product image -->
-    <th class="text-center" scope="col" style="width: 15%;">Harga Satuan</th> <!-- Unit price -->
-    <th class="text-center" scope="col" style="width: 20%;">Kuantitas</th> <!-- Quantity controls -->
-    <th class="text-center" scope="col" style="width: 20%;">Total Harga</th> <!-- Total price -->
-    <th class="text-center" scope="col" style="width: 5%;"></th> <!-- Icon delete -->
-    </tr>
-  </thead>
-  <tbody>
+    <table class="table">
+    <thead>
+        <tr>
+            <th class="text-center" scope="col" style="width: 5%;"></th> <!-- Checkbox column -->
+            <th scope="col" style="width: 35%;">Produk</th> <!-- Product image -->
+            <th class="text-center" scope="col" style="width: 15%;">Harga Satuan</th> <!-- Unit price -->
+            <th class="text-center" scope="col" style="width: 20%;">Kuantitas</th> <!-- Quantity controls -->
+            <th class="text-center" scope="col" style="width: 20%;">Total Harga</th> <!-- Total price -->
+            <th class="text-center" scope="col" style="width: 5%;"></th> <!-- Icon delete -->
+        </tr>
+    </thead>
+    <tbody>
         @foreach($cart as $item)
         <tr data-id="{{ $item->id }}" class="cart-item">
             <td>
@@ -73,122 +70,39 @@
                 <div class="py-4 align-items-center text-success fw-medium"><span class="total-harga-item">{{ number_format($item->harga * $item->kuantitas, 0) }}</span></div>
             </td>
             <td>
-            <div class="mt-3">
-    <form action="{{ route('cart.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus item ini?');">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-link text-danger p-0" style="border: none; background: none; cursor: pointer;">
-            <i class="bi bi-trash fs-4"></i>
-        </button>
-    </form>
-</div>
-
+                <div class="mt-3">
+                    <form action="{{ route('cart.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus item ini?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link text-danger p-0" style="border: none; background: none; cursor: pointer;">
+                            <i class="bi bi-trash fs-4"></i>
+                        </button>
+                    </form>
+                </div>
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
-    </div>
+
+</div>
 <!-- /////////////////////////Table cart end//////////////////////// -->
 
 <!-- Total Cart Summary -->
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesanan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-
-<div class="container mt-5">
-    <div class="card bg-white rounded-4">
-        <div class="d-flex justify-content-end align-items-center py-2">
-            <div class="px-2">
-                <span>Total (<span id="total-produk">{{ $cart->count() }}</span> Produk):</span>
-            </div>
-            <div>
-                <span class="px-3 text-success fw-medium fs-4">
-                    <span id="total-harga">{{ number_format($cart->sum(fn($item) => $item->harga * $item->kuantitas), 0) }}</span>
-                </span>
-            </div>
-            <div>
-                <button id="buatPesananButton" class="btn btn-success mx-3 px-4 rounded-5">Buat Pesanan</button>
-            </div>
-        </div>
-    </div>
+<div class="card bg-white rounded-4">
+<div class="d-flex justify-content-end align-items-center py-2">
+        <div class="px-2">
+            <span>Total (<span id="total-produk">{{ $cart->count() }}</span> Produk):</span>
+</div>
+<div>
+            <span class="px-3 text-success fw-medium fs-4"><span id="total-harga">{{ number_format($cart->sum(fn($item) => $item->harga * $item->kuantitas), 0) }}</span></span>
+</div>
+<div>
+<button class="btn btn-success mx-3 px-4 rounded-5">Buat Pesanan</button>
 </div>
 
-<!-- Modal untuk Pesan Berhasil -->
-<div class="modal fade" id="pesananBerhasilModal" tabindex="-1" aria-labelledby="pesananBerhasilLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-success" id="pesananBerhasilLabel">Pesanan Berhasil</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Pesanan Anda telah berhasil dibuat!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.getElementById('buatPesananButton').addEventListener('click', function () {
-        // Tampilkan modal pesan berhasil
-        const pesananBerhasilModal = new bootstrap.Modal(document.getElementById('pesananBerhasilModal'));
-        pesananBerhasilModal.show();
-    });
-</script>
-
-</body>
-
-<script>
-    document.getElementById('buatPesananButton').addEventListener('click', function () {
-        // Ambil semua item yang dicentang
-        const checkedItems = Array.from(document.querySelectorAll('.item-checkbox:checked'));
-        const itemIds = checkedItems.map(item => item.closest('.cart-item').getAttribute('data-id'));
-
-        if (itemIds.length === 0) {
-            alert('Tidak ada item yang dipilih.');
-            return;
-        }
-
-        // Kirim data ke server
-        fetch("{{ route('cart.checkout') }}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ itemIds: itemIds })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Tampilkan modal pesan berhasil
-            const pesananBerhasilModal = new bootstrap.Modal(document.getElementById('pesananBerhasilModal'));
-            pesananBerhasilModal.show();
-
-            // Hapus item yang dicentang dari tampilan
-            checkedItems.forEach(item => {
-                item.closest('.cart-item').remove();
-            });
-
-            // Perbarui total harga
-            updateTotalHarga();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat membuat pesanan.');
-        });
-    });
-</script>
-
-
+</div>
 
 </div>
 </section>
